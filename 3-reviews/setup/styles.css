@@ -99,7 +99,7 @@ main {
   cursor: pointer;
 }
 .prev-btn:hover,
-.prev-btn-btn:hover {
+.next-btn:hover {
   color: var(--clr-primary-5);
 }
 .random-btn {
