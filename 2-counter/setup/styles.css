@@ -15,6 +15,7 @@ main {
 #value {
   font-size: 6rem;
   font-weight: bold;
+  color: rgb(34, 34, 34);
 }
 .btn {
   text-transform: uppercase;
