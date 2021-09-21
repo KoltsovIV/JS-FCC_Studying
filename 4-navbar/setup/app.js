@@ -3,3 +3,11 @@
 // add - add class
 // remove - remove class
 // toggle - toggles class
+
+const btnToggle = document.querySelector(".nav-toggle"),
+      links = document.querySelector('.links');
+
+      
+btnToggle.addEventListener('click', () => {
+    links.classList.toggle('show-links');
+});
