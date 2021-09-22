@@ -77,14 +77,10 @@ const menu = [
 const sectionCenter = document.querySelector('.section-center'),
       btnContainer = document.querySelector('.btn-container');
 
-// making buttons to filter content usin function, after that get buttons in Nodelist
-displayBtns(menu);
-const btnsFilter = document.querySelectorAll('.filter-btn');
-
-// making content after DOM loaded
+// making content and buttons after DOM loaded
 window.addEventListener('DOMContentLoaded', () =>{
   displayMenuItems(menu);  
-  
+  displayBtns(menu);
 });
 
 // Function for display content
@@ -113,33 +109,36 @@ function displayBtns(array) {
   });
   displayBtnsList = displayBtnsList.join('');
   btnContainer.innerHTML = displayBtnsList;
-}
 
-// // function for filtering category property in array of content objects
-// + adding category 'All'
-function unicCategories (array) {
-  let categoriesList = array.map((item) => {  
-    return item.category;
-  });  
-  categoriesList = categoriesList.filter(function(item, pos) {
-    return categoriesList.indexOf(item) == pos;
-  });
-  categoriesList.unshift('all');
-  return categoriesList;
-}
+  // // function for filtering category property in array of content objects
+  // + adding category 'All'
+  function unicCategories (array) {
+    let categoriesList = array.map((item) => {  
+      return item.category;
+    });  
+    categoriesList = categoriesList.filter(function(item, pos) {
+      return categoriesList.indexOf(item) == pos;
+    });
+    categoriesList.unshift('all');
+    return categoriesList;
+  }
 
-// eventListener for buttons to filter content according to categories
-btnsFilter.forEach((item) => {
-  item.addEventListener('click', () =>{
-    if (item.classList.contains("all")){
-      return displayMenuItems(menu);
-    }else {
-      let array = menu.filter((element) => {
-        if (item.classList.contains(element.category.toLowerCase())){
-         return element;
-        }      
-      });    
-      displayMenuItems(array);
-    }
+  // making buttons to filter content
+  const btnsFilter = document.querySelectorAll('.filter-btn');
+
+  // eventListener for buttons to filter content according to categories
+  btnsFilter.forEach((item) => {
+    item.addEventListener('click', () =>{
+      if (item.classList.contains("all")){
+        return displayMenuItems(menu);
+      }else {
+        let array = menu.filter((element) => {
+          if (item.classList.contains(element.category.toLowerCase())){
+          return element;
+          }      
+        });    
+        displayMenuItems(array);
+      }
+    });
   });
-});
+}
