@@ -72,3 +72,73 @@ const menu = [
     desc: `skateboard fam synth authentic semiotics. Live-edge lyft af, edison bulb yuccie crucifix microdosing.`,
   },
 ];
+
+// getting parents for dinamic transform
+const sectionCenter = document.querySelector('.section-center'),
+      btnContainer = document.querySelector('.btn-container');
+
+// making content and buttons after DOM loaded
+window.addEventListener('DOMContentLoaded', () =>{
+  displayMenuItems(menu);  
+  displayBtns(menu);
+});
+
+// Function for display content
+function displayMenuItems (menuItems) {
+  let displayMenu = menuItems.map((item) => {
+    return `<article class="menu-item">
+      <img src="${item.img}" class="photo" alt="menu item">
+      <div class="item-info">
+        <header>
+          <h4>${item.title}</h4>
+          <h4 class="price">$${item.price}</h4>  
+        </header>
+        <p class="item-text">${item.desc}
+        </p>
+      </div>
+    </article>`;
+  });
+  displayMenu = displayMenu.join('');
+  sectionCenter.innerHTML = displayMenu;
+}
+
+// function for display filter buttons
+function displayBtns(array) {
+  let displayBtnsList = unicCategories(array).map((item) =>{
+    return `<button class="filter-btn ${item}">${item}</button>`;
+  });
+  displayBtnsList = displayBtnsList.join('');
+  btnContainer.innerHTML = displayBtnsList;
+
+  // // function for filtering category property in array of content objects
+  // + adding category 'All'
+  function unicCategories (array) {
+    let categoriesList = array.map((item) => {  
+      return item.category;
+    });  
+    categoriesList = categoriesList.filter(function(item, pos) {
+      return categoriesList.indexOf(item) == pos;
+    });
+    categoriesList.unshift('all');
+    return categoriesList;
+  }
+
+  // making buttons to filter content
+  const btnsFilter = document.querySelectorAll('.filter-btn');
+
+  // eventListener for buttons to filter content according to categories
+  btnsFilter.forEach((item) => {
+    item.addEventListener('click', () =>{
+      if (item.classList.contains("all")){
+        return displayMenuItems(menu);
+      }else {
+        let array = menu.filter((element) => {
+          if (item.classList.contains(element.category.toLowerCase())){
+          return element;
+          }      
+        });    
+        displayMenuItems(array);
+      }
+    });
+  });
+}
