@@ -1,13 +1,80 @@
 // Element.getBoundingClientRect() method returns the size of an element and its position relative to the viewport.
-// pageYOffset is a read - only window property that returns the number of pixels the document has been scrolled vertically.
+// pageYOffset is a read - only window property that returns the number of pixels the
+// document has been scrolled vertically.
 // slice extracts a section of a string without modifying original string
 //offsetTop - A Number, representing the top position of the element, in pixels
 
 // ********** set date ************
-
+const currentYear = document.getElementById('date');
+currentYear.innerHTML = new Date().getFullYear();
 // ********** close links ************
+const navToggle = document.querySelector('.nav-toggle'),
+      linksContainer = document.querySelector('.links-container'),
+      links = document.querySelector('.links');
 
+navToggle.addEventListener('click', () => {
+    // linksContainer.classList.toggle('show-links');
+    const containerHeight = linksContainer.getBoundingClientRect().height,
+          linksHeight = links.getBoundingClientRect().height;
+    
+    if (containerHeight == 0) {
+        linksContainer.style.height = `${linksHeight}px`;
+    } else {
+        linksContainer.style.height = 0;
+    }
+        
+});
 // ********** fixed navbar ************
+const navbar = document.getElementById('nav'),
+      topLinkBtn = document.querySelector('.top-link');
 
+window.addEventListener('scroll', () => {
+    const scrollHeight = window.pageYOffset,
+          navHeight = navbar.getBoundingClientRect().height;
+    if (scrollHeight > navHeight) {
+        navbar.classList.add('fixed-nav');
+    } else {
+        navbar.classList.remove('fixed-nav');
+    }
+
+    if (scrollHeight > 500) {
+        topLinkBtn.classList.add('show-link');
+    } else {
+        topLinkBtn.classList.remove('show-link');
+    }
+
+});
 // ********** smooth scroll ************
-// select links
+
+//select links
+const scrollLinks = document.querySelectorAll('.scroll-link');
+
+scrollLinks.forEach((link) => {
+    link.addEventListener('click', (e) => {
+        // prevent default
+        e.preventDefault();
+        // navigate to specific spot
+        const id = e.currentTarget.getAttribute('href').slice(1);
+        const element = document.getElementById(id);
+
+        //calculate the heights
+        const navHeight = navbar.getBoundingClientRect().height,
+              containerHeight = linksContainer.getBoundingClientRect().height,
+              fixedNav = navbar.classList.contains('fixed-nav');
+
+        let position = element.offsetTop - navHeight;
+
+        if (!fixedNav){
+            position -= navHeight;
+        }
+        if (navHeight > 82) {
+            position = position + containerHeight;
+        }
+
+        window.scrollTo({
+            left: 0,
+            top: position,
+        });
+        linksContainer.style.height = 0;
+    });
+});
