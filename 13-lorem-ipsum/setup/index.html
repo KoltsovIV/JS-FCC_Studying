@@ -9,7 +9,20 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <h1>lorem ipsum project</h1>
+    <section class="section-center">
+      <h3>TIRED OF BORING LOREM IPSUM?</h3>
+      <form action="" class="lorem-form" id="lorem-form">
+        <label for="lorem-form">Paragraphs:</label>
+        <input  
+          placeholder="5"
+          type="number"
+          min="0" 
+          step="1"
+          onkeypress="return event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57">
+        <button type="submit" class="btn" id="submit-btn">generete</button> 
+      </form>
+      <div class="result"></div>
+    </section>
     <!-- javascript -->
     <script src="app.js"></script>
   </body>
