@@ -12,22 +12,24 @@ I just told you! You've killed me! Fry! Quit doing the right thing, you jerk! Mi
   `Rutters Plate Fleet boom chandler Brethren of the Coast handsomely lookout marooned brigantine knave. Buccaneer gangway jack rum loot spyglass line Jack Tar fore gaff. Gaff topmast scuttle ballast swab draught measured fer yer chains dance the hempen jig Chain Shot yardarm.`,
 ];
 
-const btnGenerate = document.querySelector('.lorem-form button'),
+const form = document.querySelector('.lorem-form '),
       inputValue = document.querySelector('.lorem-form input'),
       containerResult = document.querySelector('.result');
 
-btnGenerate.addEventListener('click', (event) =>{
+form.addEventListener('submit', (event) =>{
   event.preventDefault();
-  const value = inputValue.value;
+  const value = parseInt(inputValue.value);
+  const rndNumber = (Math.floor(Math.random() * text.length));
   containerResult.innerHTML = '';
 
-  for (let i = 0; i < value; i++) {
-    containerResult.innerHTML += `<p>${text[i]}</p>`;
-  }
-  
-  if (!value || value > (text.length)) {    
-  const rndNumber = (Math.floor(Math.random() * (text.length - 1)));
-  containerResult.innerHTML = `<p>${text[rndNumber]}</p>`;
-  console.log(rndNumber);
+  if (isNaN(value) || value <= 0 || value > text.length) { 
+    containerResult.innerHTML = `<p class="result">${text[rndNumber]}</p>`;
+  } else {
+    let tempText = text.slice(0, value);
+    tempText = tempText.map((item) => {
+      return `<p class="result">${item}</p>`;
+    })
+    .join("");
+    containerResult.innerHTML = tempText;
   }
 });
